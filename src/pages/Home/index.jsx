@@ -26,9 +26,9 @@ export default function Home() {
 					const aspectData = {};
 					students.forEach((student, studentIndex) => {
 						const value = document.getElementById(`input-${studentIndex}-${aspectIndex}`).value;
-						aspectData[`Mahasiswa_${studentIndex + 1}`] = value;
+						aspectData[`mahasiswa_${studentIndex + 1}`] = value;
 					});
-					formData[`Aspek_Penilaian_${aspect}`] = aspectData;
+					formData[`aspek_penilaian_${aspect}`] = aspectData;
 				});
 				const json = JSON.stringify(formData);
 				setJsonData(json);
@@ -45,13 +45,20 @@ export default function Home() {
 		});
 	};
 
+	const getRandomAvatarUrl = () => {
+		const randomNumber = Math.floor(Math.random() * 1249);
+		return `https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/${randomNumber}.jpg`;
+	};
+
 	return (
 		<Container className="mt-2">
 			<h3 className="mb-3">Aspek Penilaian Mahasiswa</h3>
 			<Table striped bordered>
 				<thead>
 					<tr>
-						<th></th>
+						<th>No</th>
+						<th>Foto</th>
+						<th>Nama</th>
 						<th>Aspek Penilaian 1</th>
 						<th>Aspek Penilaian 2</th>
 						<th>Aspek Penilaian 3</th>
@@ -61,7 +68,11 @@ export default function Home() {
 				<tbody>
 					{students.map((student, studentIndex) => (
 						<tr key={studentIndex}>
-							<th scope="row">{student}</th>
+							<th>{studentIndex + 1}</th>
+							<th>
+								<img style={{ width: 50, height: 50 }} src={getRandomAvatarUrl()} alt={`avatar_of_${student}`} />
+							</th>
+							<th style={{ width: 500 }} scope="row">{student}</th>
 							{[1, 2, 3, 4].map((aspect, aspectIndex) => (
 								<td key={aspectIndex}>
 									<Form.Select id={`input-${studentIndex}-${aspectIndex}`}>
